@@ -20,6 +20,8 @@ sudo apt-get install zbar-tools
 
 
 nano planb.py
+
 copy/paste
+
 python planb.py
 
