@@ -12,7 +12,7 @@ Setup
 
 clean Raspbian install
 
-sudo apt-get install python-crypto
+sudo apt-get install python-crypto</br>
 sudo apt-get install python-serial
 sudo apt-get install zbar-tools
 
