@@ -19,7 +19,7 @@
 
 
 import os
-import MySQLdb
+#import MySQLdb
 import sys
 import json
 import decimal
@@ -88,7 +88,7 @@ def get_bcaddress_version(strAddress):
 def scan_QR():
     global QR_code
     #global stop_scan
-    proc = Popen(shlex.split('zbarcam --raw --nodisplay --prescale=640x480 /dev/video1'), stdout=PIPE)
+    proc = Popen(shlex.split('zbarcam --raw --nodisplay --prescale=640x480'), stdout=PIPE)
     #while 1:
     #    print proc.communicate()[0]
     #    time.sleep(1)
@@ -218,6 +218,7 @@ while ser.isOpen():
     if(billCredit != 0):
         lastCredit = billCredit
         if(ord(out[3]) & 0x10):
+            #Send bitcoin
             #get price
 	    getgox = 'curl https://data.mtgox.com/api/2/BTCUSD/money/ticker'
 
@@ -236,6 +237,7 @@ while ser.isOpen():
 	    amount = round(amount,8)
 	    #convert to satoshi
 	    amount = int(amount * 100000000)
+	    amount = str(amount)
 	    print amount
 	    #send btc from electrum
 	    #if amount > free inputs, error (reject bill)
