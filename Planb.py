@@ -229,7 +229,7 @@ while ser.isOpen():
 	    last = decode['data']['last']['display_short']
 	    pretty = decimal.Decimal(last[1:])
 	    #this is where I pass bills tenderd in
-	    dollars = 1
+	    dollars = billCredit
 	    #convert USD/BTC
 	    amount = dollars/pretty
    	    #round to satoshi
@@ -240,7 +240,8 @@ while ser.isOpen():
 	    #send btc from electrum
 	    #if amount > free inputs, error (reject bill)
 	    #get address
-	    address = '16o94qS8ZFEoKUTrZfLd2sLhvDqLKi4hDe'
+	    #address = '16o94qS8ZFEoKUTrZfLd2sLhvDqLKi4hDe'
+            address = QR_code
             #command line
 	    electrumsend = "electrum payto" + " " + address + " " + amount
 	    x = os.popen(cmd)
