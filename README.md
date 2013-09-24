@@ -23,5 +23,28 @@ nano planb.py
 
 copy/paste
 
-python planb.py
 
+install electrum
+=================
+
+sudo apt-get install python-qt4 python-pip
+
+sudo pip install http://download.electrum.org/Electrum-1.8.1.tar.gz#md5=dc9f4b1cb38bd1d152be83d0a430cf62
+
+startx and loginto rpi
+
+ctr shift T to open terminal
+
+electrum
+
+Backup seed (printer, or write it down) and make a new wallet
+
+load btc into wallet
+
+plug in webcam
+
+sudo python planb.py
+
+(currently headless, will scan for address's display in terminal and send btc after every bill that enterd) 
+
+GUI is coming! 
