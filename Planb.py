@@ -198,7 +198,6 @@ while ser.isOpen():
     
     if(billCredit != 0):
         lastCredit = billCredit
-	print 'Sending Bitcoin'
         if(ord(out[3]) & 0x10):
             #get price
 	    getgox = 'curl https://data.mtgox.com/api/2/BTCUSD/money/ticker'
