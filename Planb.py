@@ -1,23 +1,9 @@
 #!/usr/bin/env python
-#gen1 9/5 *received BitHighlander
-
-
-"""   
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
-
+import os
+import MySQLdb
+import sys
+import json
+import decimal
 from subprocess import Popen, PIPE
 import sys, thread, time, shlex, math, re
 from Crypto.Hash import SHA256
@@ -83,7 +69,7 @@ def get_bcaddress_version(strAddress):
 def scan_QR():
     global QR_code
     #global stop_scan
-    proc = Popen(shlex.split('zbarcam --raw --nodisplay --prescale=640x480'), stdout=PIPE)
+    proc = Popen(shlex.split('zbarcam --raw --nodisplay --prescale=640x480 /dev/video1'), stdout=PIPE)
     #while 1:
     #    print proc.communicate()[0]
     #    time.sleep(1)
@@ -212,11 +198,46 @@ while ser.isOpen():
     
     if(billCredit != 0):
         lastCredit = billCredit
+		print 'Sending Bitcoin'
         if(ord(out[3]) & 0x10):
-            print "Bill credited: Bill#", billCredit
+            #get price
+			getgox = 'curl https://data.mtgox.com/api/2/BTCUSD/money/ticker'
+
+			#os.system(cmd)
+			x = os.popen(getgox)
+			output = x.read()
+			decode = json.loads(output)
+			#print decode
+			last = decode['data']['last']['display_short']
+			pretty = decimal.Decimal(last[1:])
+			#this is where I pass bills tenderd in
+			dollars = 1
+
+			#convert USD/BTC
+			amount = dollars/pretty
+
+			#round to satoshi
+			amount = round(amount,8)
+			#convert to satoshi
+			amount = int(amount * 100000000)
+			print amount
+			#send btc from electrum
+
+			#if amount > free inputs, error (reject bill)
+
+			#get address
+			address = '16o94qS8ZFEoKUTrZfLd2sLhvDqLKi4hDe'
+
+			#command line
+			electrumsend = "electrum payto" + " " + address + " " + amount
+			x = os.popen(cmd)
+			output = x.read()
+
+			print 'Sent: ' + amount + ' to: ' + address + ' TXhash: ' + output 
+			print output
+			print "Bill credited: Bill", billCredit
             billCount[billCredit] += 1
-            print "Acceptor now holds:",binascii.hexlify(billCount)
-    
+            print "Acceptor now holds:",binascii.hexlify(billCount)  
     time.sleep(0.1)
     #print binascii.hexlify(billCount)
     
