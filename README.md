@@ -6,6 +6,7 @@ This is for the Apex 7000 bill acceptor from http://pyramidacceptors.com/ Driver
 Created by 
 Warren from Absorbing Technologies http://www.absorbingtechnologies.com/
 
+continued development by BitHighlander
 
 Setup
 ===================
@@ -31,7 +32,7 @@ sudo apt-get install python-qt4 python-pip
 
 sudo pip install http://download.electrum.org/Electrum-1.8.1.tar.gz#md5=dc9f4b1cb38bd1d152be83d0a430cf62
 
-startx and loginto rpi
+startx and log into rpi
 
 ctr shift T to open terminal
 
