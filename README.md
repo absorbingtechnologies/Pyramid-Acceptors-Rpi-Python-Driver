@@ -13,6 +13,8 @@ Setup
 
 clean Raspbian install
 
+sudo apt-get update
+
 sudo apt-get install python-crypto
 
 sudo apt-get install python-serial
